@@ -14,8 +14,8 @@ This will patch any `vsh.self` to allow the PSN connection !
 - Go here `dev_blind/vsh/module/` (or `dev_rebug/vsh/module/`) and move the `vsh.self` patched by the program in the list, FileZilla will ask you to replace it, select `Yes`!
 - Once replaced, restart your console, and connect on the PSN.
 
-Available on NextGenUpdate.com & [RealityGaming.fr](http://www.nextgenupdate.com/forums/ps3-cheats-customization/802765-release-imcsxs-vsh-patcher-psn-back-any-cfw-cex-dex.html) (French)
-[NextGenUpdate.com](http://realitygaming.fr/threads/release-imcsxs-vsh-patcher-psn-is-back.414414/)
+Available on [NextGenUpdate.com](http://www.nextgenupdate.com/forums/ps3-cheats-customization/802765-release-imcsxs-vsh-patcher-psn-back-any-cfw-cex-dex.html) & [RealityGaming.fr](http://realitygaming.fr/threads/release-imcsxs-vsh-patcher-psn-is-back.414414/) (French)
+
 # How to build
 
 - Extract the `src` folder and use the `.csproj` file
