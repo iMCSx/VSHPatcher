@@ -1,4 +1,4 @@
-# VSH Patcher 1.0 by iMCSx
+# VSH Patcher 1.0
 
 This will patch any vsh.self to allow the PSN connection !
 
