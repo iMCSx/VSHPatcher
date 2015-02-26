@@ -194,7 +194,7 @@ namespace VSH_Patcher
                     // Much faster than enumerable function
                     if (ArrayCompare(sequence, ps3ita_patch_sequence) || ArrayCompare(sequence, ps3ita_patched))
                     {
-                        int offset = i+4; //  -4 * 4; 
+                        int offset = i+4; 
                         elf_data.RemoveRange(offset, ps3ita_patch.Length);
                         elf_data.InsertRange(offset, ps3ita_patch);
 

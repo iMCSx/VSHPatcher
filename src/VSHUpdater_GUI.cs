@@ -30,6 +30,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -93,82 +94,80 @@ namespace VSH_Patcher
             // Setup our progressbar
             progressBar.StyleInvoke(ProgressBarStyle.Marquee);
 
-            // If not empty well we start steps
-            if (!string.IsNullOrEmpty(file))
-            {
-                // Unpacking
-                lblinfo.TextInvoke("Unpacking VSH...");
-                Thread.Sleep(1000);
-                if (VSH.Unpack(file))
-                {
-                    // Patching
-                    lblinfo.TextInvoke("Patching VSH...");
-                    Thread.Sleep(1000);
-
-                    bool isPatched = VSH.IsPatched(VSH.WorkingDir + VSH.Unpacked_Name);
-
-                    // If he's patched, we ask to user if he want continue (why not?)
-                    if (isPatched)
-                    {
-                        if (MessageBox.Show("This VSH is already patched, none modification will be applied, continue anyway ?", "File Already patched", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.No)
-                        {
-                            RestoreGUI();
-                            return;
-                        }
-                    }
-
-                    // Patch !
-                    if (VSH.PatchPSN(VSH.WorkingDir + VSH.Unpacked_Name))
-                    {
-                        // Rebuild
-                        lblinfo.TextInvoke("Rebuild VSH...");
-                        Thread.Sleep(1000);
-                        if (VSH.Pack(VSH.WorkingDir + VSH.Patched_Name))
-                        {
-                            string currentDir = Application.StartupPath;
-                            string newVsh = currentDir + @"\" + VSH.Name;
-                            string newVsh_patched = currentDir + @"\" + VSH.Patched_Name;
-
-                            // Delete if exits
-                            VSH.DeleteFile(newVsh);
-                            VSH.DeleteFile(newVsh_patched);
-
-                            // Move our final files on the main folder
-                            File.Move(VSH.WorkingDir + VSH.Name, newVsh);
-                            File.Move(VSH.WorkingDir + VSH.Patched_Name, newVsh_patched);
-
-                            // If files exists that's finished.
-                            if (File.Exists(newVsh) && File.Exists(newVsh_patched))
-                            {
-                                progressBar.StyleInvoke(ProgressBarStyle.Blocks);
-                                lblinfo.TextInvoke("DONE");
-
-                                MessageBox.Show(string.Format("Successfully patched!\r\n\r\nFile saved on this location : {0}\r\n\r\nCredits :\r\n\r\n- The PS3ITA Team\r\n- Naehrwert (Scetool)\r\n- HeAd (Testing)\r\n\r\nCreated by iMCSx.", newVsh), "Success !", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                                Process.Start(currentDir);
-
-                                if (MessageBox.Show("Do you want visit my twitter profile ?", "Follow me !", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
-                                    Process.Start("http://www.twitter.com/iMCSx");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Impossible to move final files, check into the folder 'Tools'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                Process.Start(VSH.WorkingDir);
-                            }
-
-                        }
-                        else MessageBox.Show("Packing failed, some suggestions :\r\n\r\n- Check if a file path is not invalid.\r\n- Check if you have the rights permissions to edit/move/create a file.\r\n- Check if the folder 'Tools' exists with everything on it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else MessageBox.Show("Patching failed, too recent VSH maybe?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else MessageBox.Show("Unpacking failed, some suggestions :\r\n\r\n- Check if a file path is not invalid.\r\n- Check if you have the rights permissions to edit/move/create a file.\r\n- Check if the folder 'Tools' exists with everything on it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else MessageBox.Show("Impossible to grab the file from the textbox, strange error.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            RestoreGUI();
-
             try
             {
-                
+                // If not empty well we start steps
+                if (!string.IsNullOrEmpty(file))
+                {
+                    // Unpacking
+                    lblinfo.TextInvoke("Unpacking VSH...");
+                    Thread.Sleep(1000);
+                    if (VSH.Unpack(file))
+                    {
+                        // Patching
+                        lblinfo.TextInvoke("Patching VSH...");
+                        Thread.Sleep(1000);
+
+                        bool isPatched = VSH.IsPatched(VSH.WorkingDir + VSH.Unpacked_Name);
+
+                        // If he's patched, we ask to user if he want continue (why not?)
+                        if (isPatched)
+                        {
+                            if (MessageBox.Show("This VSH is already patched, none modification will be applied, continue anyway ?", "File Already patched", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.No)
+                            {
+                                RestoreGUI();
+                                return;
+                            }
+                        }
+
+                        // Patch !
+                        if (VSH.PatchPSN(VSH.WorkingDir + VSH.Unpacked_Name))
+                        {
+                            // Rebuild
+                            lblinfo.TextInvoke("Rebuild VSH...");
+                            Thread.Sleep(1000);
+                            if (VSH.Pack(VSH.WorkingDir + VSH.Patched_Name))
+                            {
+                                string currentDir = Application.StartupPath;
+                                string newVsh = currentDir + @"\" + VSH.Name;
+                                string newVsh_patched = currentDir + @"\" + VSH.Patched_Name;
+
+                                // Delete if exits
+                                VSH.DeleteFile(newVsh);
+                                VSH.DeleteFile(newVsh_patched);
+
+                                // Move our final files on the main folder
+                                File.Move(VSH.WorkingDir + VSH.Name, newVsh);
+                                File.Move(VSH.WorkingDir + VSH.Patched_Name, newVsh_patched);
+
+                                // If files exists that's finished.
+                                if (File.Exists(newVsh) && File.Exists(newVsh_patched))
+                                {
+                                    progressBar.StyleInvoke(ProgressBarStyle.Blocks);
+                                    lblinfo.TextInvoke("DONE");
+
+                                    MessageBox.Show(string.Format("Successfully patched!\r\n\r\nFile saved on this location : {0}\r\n\r\nCredits :\r\n\r\n- The PS3ITA Team\r\n- Naehrwert (Scetool)\r\n- HeAd (Testing)\r\n\r\nCreated by iMCSx.", newVsh), "Success !", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                    Process.Start(currentDir);
+
+                                    if (MessageBox.Show("Do you want visit my twitter profile ?", "Follow me !", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                                        Process.Start("http://www.twitter.com/iMCSx");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Impossible to move final files, check into the folder 'Tools'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    Process.Start(VSH.WorkingDir);
+                                }
+
+                            }
+                            else MessageBox.Show("Packing failed, some suggestions :\r\n\r\n- Check if a file path is not invalid.\r\n- Check if you have the rights permissions to edit/move/create a file.\r\n- Check if the folder 'Tools' exists with everything on it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else MessageBox.Show("Patching failed, too recent VSH maybe?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else MessageBox.Show("Unpacking failed, some suggestions :\r\n\r\n- Check if a file path is not invalid.\r\n- Check if you have the rights permissions to edit/move/create a file.\r\n- Check if the folder 'Tools' exists with everything on it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else MessageBox.Show("Impossible to grab the file from the textbox, strange error.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                RestoreGUI();
             }
             catch (Exception ex)
             {
@@ -193,6 +192,12 @@ namespace VSH_Patcher
                 MessageBox.Show("The folder 'Tools' is not in the exe folder. You need to have a folder called 'Tools' containing scetool to use this program.\r\n\r\nIf you don't understand, download the full source code on GitHub and look into the 'bin' folder.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
             }
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+
+            lblVersion.Text = string.Format("v{0}", version);
         }
     }
 }

@@ -58,6 +58,7 @@ namespace VSH_Patcher
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.btnPatch = new System.Windows.Forms.Button();
             this.lblinfo = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // boxVshOrigine
@@ -118,11 +119,21 @@ namespace VSH_Patcher
             this.lblinfo.Text = "Idle";
             this.lblinfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblVersion
+            // 
+            this.lblVersion.Location = new System.Drawing.Point(222, 140);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(100, 17);
+            this.lblVersion.TabIndex = 6;
+            this.lblVersion.Text = "v0.0.0.0";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // VSHUpdater_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 161);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblinfo);
             this.Controls.Add(this.btnPatch);
             this.Controls.Add(this.progressBar);
@@ -150,6 +161,7 @@ namespace VSH_Patcher
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button btnPatch;
         private System.Windows.Forms.Label lblinfo;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 
